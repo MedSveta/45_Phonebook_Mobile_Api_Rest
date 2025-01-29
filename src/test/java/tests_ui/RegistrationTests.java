@@ -20,6 +20,7 @@ public class RegistrationTests extends AppiumConfig {
                 .username(generateEmail(10))
                 .password("Poiuyt123!")
                 .build();
+        System.out.println(user.toString());
         new SplashScreen(driver).goToAuthScreen(6);
         AuthenticationScreen authenticationScreen = new AuthenticationScreen(driver);
         authenticationScreen.typeAuthenticationForm(user);
