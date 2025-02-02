@@ -1,19 +1,30 @@
 package tests_ui;
 
 import config.AppiumConfig;
+import dto.ContactDtoLombok;
 import dto.UserDtoLombok;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import screens.AddNewContactScreen;
-import screens.AuthenticationScreen;
-import screens.ContactScreen;
-import screens.SplashScreen;
+import screens.*;
+
+import static helpers.RandomUtils.*;
+import static helpers.RandomUtils.generateString;
 
 public class EditContactTests extends AppiumConfig {
     UserDtoLombok user = UserDtoLombok.
             builder()
             .username("s3se6py31a@mail.com")
             .password("Poiuyt123!")
+            .build();
+
+    ContactDtoLombok contact = ContactDtoLombok.builder()
+            .name("$$$" + generateString(4))
+            .lastName("$$$"+generateString(7))
+            .email("$$$"+generateEmail(10))
+            .phone(generatePhone(10))
+            .address(generateString(8))
+            .description(generateString(20))
             .build();
 
     ContactScreen contactScreen;
@@ -30,7 +41,35 @@ public class EditContactTests extends AppiumConfig {
     }
 
     @Test
-    public void editContactPositiveTests(){
+    public void editContactPositiveTest(){
+        ContactDtoLombok contact = ContactDtoLombok.builder()
+                .name("$$$" + generateString(4))
+                .lastName("$$$"+generateString(7))
+                .email("$$$"+generateEmail(10))
+                .phone(generatePhone(10))
+                .address(generateString(8))
+                .description(generateString(20))
+                .build();
         contactScreen.goToEditScreen();
+        EditContactScreen editContactScreen = new EditContactScreen(driver);
+        editContactScreen.typeEditContactForm(contact);
+        Assert.assertTrue(new ContactScreen(driver)
+                .validatePopMessage("Contact was updated!"));
+    }
+    @Test
+    public void editContactNegativeTest(){
+        ContactDtoLombok contact = ContactDtoLombok.builder()
+                .name("")
+                .lastName("$$$"+generateString(7))
+                .email("$$$"+generateEmail(10))
+                .phone(generatePhone(10))
+                .address(generateString(8))
+                .description(generateString(20))
+                .build();
+        contactScreen.goToEditScreen();
+        EditContactScreen editContactScreen = new EditContactScreen(driver);
+        editContactScreen.typeEditContactForm(contact);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("name=must not be blank",3));
     }
 }
