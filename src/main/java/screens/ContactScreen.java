@@ -19,6 +19,19 @@ public class ContactScreen extends BaseScreen {
     @FindBy(xpath = "/hierarchy/android.widget.Toast")
     AndroidElement popUpMessage;
 
+    @FindBy(id = "com.sheygam.contactapp:id/rowName")
+    AndroidElement firstContact;
+
+    public void goToEditScreen(){
+        System.out.println("y ->"+ firstContact.getLocation().getY());
+        System.out.println("x ->"+ firstContact.getLocation().getX());
+        System.out.println("h ->"+ firstContact.getSize().getHeight());
+        System.out.println("w ->"+ firstContact.getSize().getWidth());
+
+        int yLeftUpCorner = firstContact.getLocation().getY();
+        int heightElement = firstContact.getSize().getHeight();
+    }
+
     public boolean validateHeader() {
         return textInElementPresent(headerContactScreen, "Contact list", 5);
     }
