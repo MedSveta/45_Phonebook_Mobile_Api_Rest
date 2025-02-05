@@ -37,6 +37,7 @@ public class BaseScreen {
         try {
             new WebDriverWait(driver, time).until(ExpectedConditions
                     .elementToBeClickable(element)).click();
+
         } catch (org.openqa.selenium.TimeoutException e) {
             System.out.println("create exception");
         }

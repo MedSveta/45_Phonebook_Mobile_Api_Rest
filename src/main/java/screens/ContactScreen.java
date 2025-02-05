@@ -22,6 +22,13 @@ public class ContactScreen extends BaseScreen {
     AndroidElement firstContact;
     @FindBy(id = "android:id/button1")
     AndroidElement popUpBtnYes;
+    @FindBy(xpath = "//*[@text='Logout']")
+    AndroidElement btnLogout;
+    @FindBy(xpath = "//*[@text='Date picker']")
+    AndroidElement btnDatePicker;
+    @FindBy(xpath = "//android.widget.ImageView[@content-desc='More options']")
+    AndroidElement btnMoreOptions;
+
 
     int yLeftUpCorner = firstContact.getLocation().getY();
     int heightElement = firstContact.getSize().getHeight();
@@ -29,7 +36,16 @@ public class ContactScreen extends BaseScreen {
     TouchAction<?> touchAction = new TouchAction<>(driver);
 
     public void clickBtnYes() {
-    clickWait(popUpBtnYes, 3);
+        clickWait(popUpBtnYes, 3);
+    }
+
+    public void goToDatePicker() {
+        btnMoreOptions.click();
+        clickWait(btnDatePicker, 5);
+    }
+    public void logout(){
+        clickWait(btnMoreOptions, 3);
+        clickWait(btnLogout, 3);
     }
 
     public void goToEditScreen() {

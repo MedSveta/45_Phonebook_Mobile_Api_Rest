@@ -32,7 +32,7 @@ public class AddNewContactTests extends AppiumConfig {
 
     }
 
-    @Test(invocationCount = 3)
+    @Test
     public void addNewContactPositiveTest() {
         ContactDtoLombok contact = ContactDtoLombok.builder()
                 .name("@@@" + generateString(4))
