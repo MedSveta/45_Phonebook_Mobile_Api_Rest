@@ -34,6 +34,8 @@ public class AuthenticationScreen extends BaseScreen {
     public void clickBtnLogin() {
         btnLogin.click();
     }
-
+    public boolean isAuthScreenOpen(){
+        return textInElementPresent(textAuthentication, "Authentication", 3);
+    }
 
 }

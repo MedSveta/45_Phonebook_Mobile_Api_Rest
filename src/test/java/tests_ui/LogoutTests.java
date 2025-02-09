@@ -7,10 +7,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import screens.AuthenticationScreen;
 import screens.ContactScreen;
-import screens.DatePickerScreen;
 import screens.SplashScreen;
 
-public class DatePickerTests extends AppiumConfig {
+public class LogoutTests extends AppiumConfig {
     UserDtoLombok user = UserDtoLombok.
             builder()
             .username("s3se6py31a@mail.com")
@@ -25,17 +24,13 @@ public class DatePickerTests extends AppiumConfig {
         authenticationScreen.typeAuthenticationForm(user);
         authenticationScreen.clickBtnLogin();
         contactScreen = new ContactScreen(driver);
-        contactScreen.goToDatePicker();
-
     }
 
     @Test
-    public void datePickerPositiveTest() {
-        DatePickerScreen datePickerScreen
-                = new DatePickerScreen(driver);
-        datePickerScreen.typeDate("20 March 2026");
-        datePickerScreen.clickBtnOk();
-        Assert.assertTrue(datePickerScreen.validateDate("20 March 2026"));
+    public void logoutPositiveTest(){
+        contactScreen.logout();
+        Assert.assertTrue(new AuthenticationScreen(driver)
+                .isAuthScreenOpen());
 
     }
 }

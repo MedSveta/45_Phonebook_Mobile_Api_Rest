@@ -27,6 +27,10 @@ public class DatePickerScreen extends BaseScreen {
     AndroidElement btnMonthPrev;
     @FindBy(id = "android:id/next")
     AndroidElement btnMonthNext;
+    @FindBy(id = "android:id/button1")
+    AndroidElement btnOk;
+    @FindBy(id = "com.sheygam.contactapp:id/dateTxt")
+    AndroidElement dateResult;
 
     public void typeDate(String date) {
         btnChangeDate.click();
@@ -42,60 +46,82 @@ public class DatePickerScreen extends BaseScreen {
                 .click();
         btnMonthPrev.click(); // bug
         //month=========================================
-        if(localDate.getMonth().getValue() != numberMonth(arrayDate[1])){
-            if(numberMonth(arrayDate[1])> localDate.getMonth().getValue()){
-                int num =numberMonth(arrayDate[1]) -localDate.getMonth().getValue();
+        if (localDate.getMonth().getValue() != numberMonth(arrayDate[1])) {
+            if (numberMonth(arrayDate[1]) > localDate.getMonth().getValue()) {
+                int num = numberMonth(arrayDate[1]) - localDate.getMonth().getValue();
                 for (int i = 0; i < num; i++) {
                     btnMonthNext.click();
                 }
-            }else{
-                int num = localDate.getMonth().getValue()-numberMonth(arrayDate[1]);
+            } else {
+                int num = localDate.getMonth().getValue() - numberMonth(arrayDate[1]);
                 for (int i = 0; i < num; i++) {
                     btnMonthPrev.click();
                 }
             }
         }
+        driver.findElement(By
+                .xpath(
+                        "//android.view" +
+                                ".View[@content-desc='" + date + "']")).click();
+    }
 
+    public void clickBtnOk() {
+        btnOk.click();
+    }
+
+    public boolean validateDate(String date) {
+        //20 March 2026    20/03/2026
+        String dateResultText = dateResult.getText();
+        System.out.println("dateResultText --> " + dateResultText);
+        String[] arrayDateResult = dateResultText.split("/");
+        System.out.println("date -->" +date);
+        String[] arrayDate = date.split(" ");
+        if (arrayDate[0].equals(arrayDateResult[0]) && numberMonth(arrayDate[1])
+                == Integer.parseInt(arrayDateResult[1])
+                && arrayDate[2].equals(arrayDateResult[2]))
+            return true;
+        else
+            return false;
     }
 
     private int numberMonth(String month) {
         int m = 0;
-        switch (month){
+        switch (month) {
             case "January":
-                m=1;
+                m = 1;
                 break;
             case "February":
-                m=2;
+                m = 2;
                 break;
             case "March":
-                m=3;
+                m = 3;
                 break;
             case "April":
-                m=4;
+                m = 4;
                 break;
             case "May":
-                m=5;
+                m = 5;
                 break;
             case "June":
-                m=6;
+                m = 6;
                 break;
             case "July":
-                m=7;
+                m = 7;
                 break;
             case "August":
-                m=8;
+                m = 8;
                 break;
             case "September":
-                m=9;
+                m = 9;
                 break;
             case "October":
-                m=10;
+                m = 10;
                 break;
             case "November":
-                m=11;
+                m = 11;
                 break;
             case "December":
-                m=12;
+                m = 12;
                 break;
         }
         return m;
